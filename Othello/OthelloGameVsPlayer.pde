@@ -20,6 +20,15 @@ int[][] tileColorArray = {{0, 0, 0, 0, 0, 0, 0, 0},
                           {0, 0, 0, 0, 0, 0, 0, 0},
                           {0, 0, 0, 0, 0, 0, 0, 0}};//0で緑、1で白、2で黒
                           
+int[][] tileScore = {{120, -20, 20,  5,  5, 20, -20, 120}, 
+                     {-20, -40, -5, -5, -5, -5, -40, -20}, 
+                     { 20,  -5, 15,  3,  3, 15,  -5,  20}, 
+                     {  5,  -5,  3,  3,  3,  3,  -5,   5}, 
+                     {  5,  -5,  3,  3,  3,  3,  -5,   5}, 
+                     { 20,  -5, 15,  3,  3, 15,  -5,  20}, 
+                     {-20, -40, -5, -5, -5, -5, -40, -20}, 
+                     {120, -20, 20,  5,  5, 20, -20, 120}};
+                          
 int whiteTileCount;
 int blackTileCount;
 
@@ -29,7 +38,12 @@ boolean reversedTile = false;//trueで一回以上ひっくり返した、false�
 ArrayList<Integer> reversibleTilePosX = new ArrayList<Integer>();
 ArrayList<Integer> reversibleTilePosY = new ArrayList<Integer>();
 
+ArrayList<Tile> puttableTileArray = new ArrayList<Tile>();
+
 Tile[][] tileArray = new Tile[8][8];
+Tile[][] tmpTileArray = new Tile[8][8];//現在のマスの状況を一時的に保存する
+
+Tile bestScoreTile;
 
 void setup(){
   size(600, 400);
@@ -62,28 +76,22 @@ void mousePressed(){
 
 void gameDirector(int mousePosX, int mousePosY){
   Tile tile = clickedTileCheck(mousePosX, mousePosY);
-  if(puttableTileCheck(tile)){
+  if(puttableTileCheck(tile, tileColorArray)){
     putTile(tile);
     playerTurn = !playerTurn;
     background(204);
     fieldUpdate();
     tileCount();
-    if(allPuttableTileCheck() == false){
+    turnSkipCheck();
+    if(playerTurn == false){
+      putTile(enemyPutTile());
+//      minimax(tileColorArray, 2);
+//      putTile(bestScoreTile);
       playerTurn = !playerTurn;
-      textUpdate(); 
-      if(allPuttableTileCheck() == false){
-        if(whiteTileCount > blackTileCount){
-          text("白の勝ち", 400, 100);
-        }else if(whiteTileCount < blackTileCount){
-          text("黒の勝ち", 400, 100);
-        }else if(whiteTileCount == blackTileCount){
-          text("引き分け", 400, 100);
-        }
-        text("白：" + whiteTileCount + "枚\n" +
-             "黒：" + blackTileCount + "枚", 400, 200);
-      }
-    }else{
-      textUpdate(); 
+      background(204);
+      fieldUpdate();
+      tileCount();
+      turnSkipCheck();
     }
   }
 }  
@@ -126,7 +134,7 @@ Tile clickedTileCheck(int mousePosX, int mousePosY){
   return tileArray[0][0];
 }
 
-boolean puttableTileCheck(Tile tile){
+boolean puttableTileCheck(Tile tile, int[][] tileColorArray){
   
   int playerColor;
   int enemyColor;
@@ -318,10 +326,30 @@ void textUpdate(){
        "黒：" + blackTileCount + "枚", 400, 200);
 }
 
+void turnSkipCheck(){
+  if(allPuttableTileCheck() == false){
+    playerTurn = !playerTurn;
+    textUpdate(); 
+    if(allPuttableTileCheck() == false){
+      if(whiteTileCount > blackTileCount){
+        text("白の勝ち", 400, 100);
+      }else if(whiteTileCount < blackTileCount){
+        text("黒の勝ち", 400, 100);
+      }else if(whiteTileCount == blackTileCount){
+        text("引き分け", 400, 100);
+      }
+      text("白：" + whiteTileCount + "枚\n" +
+           "黒：" + blackTileCount + "枚", 400, 200);
+    }
+  }else{
+    textUpdate(); 
+  }
+}
+
 boolean allPuttableTileCheck(){
   for(int i = 0; i < 8; i++){
     for(int j = 0; j < 8; j++){
-      if(puttableTileCheck(tileArray[i][j])){
+      if(puttableTileCheck(tileArray[i][j], tileColorArray)){
         return true;
       }
     }
@@ -329,25 +357,123 @@ boolean allPuttableTileCheck(){
   return false;
 }
 
-int maxlevel(int limit){//https://www.webcyou.com/?p=6997
-
-  if(limit == 0){
-    return 0;//この手の最終評価値を入れる
+Tile enemyPutTile(){
+  int maxScore = -10000;
+  Tile maxScoreTile = tileArray[0][0];
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      tmpTileArray[i][j] = tileArray[i][j];
+    }
   }
-  
-  int score = -100;
-  int score_max = -100;
-  
-  for(int i = 0; i < tileColorArray.length; i++){
-    for(int j = 0; j < tileColorArray[0].length; j++){
-      if(puttableTileCheck(tileArray[i][j])){
-        score = minlevel(limit - 1);
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      if(puttableTileCheck(tileArray[i][j], tileColorArray)){
+        if(scoreCheck(tileArray[i][j]) > maxScore){
+          maxScore = scoreCheck(tileArray[i][j]);
+          maxScoreTile = tileArray[i][j];
+        }
       }
     }
   }
-  return score_max;
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      tileArray[i][j] = tmpTileArray[i][j];
+    }
+  }
+  return maxScoreTile;
 }
 
-int minlevel(int limit){
-  return 0;
+/*
+int minimax(int[][] tColorArray, int depth){
+  
+  int bestScore = 0;
+  bestScoreTile = tileArray[0][0];
+  
+  if(depth == 0){
+    return allScoreCheck(tColorArray);
+  }
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      if(puttableTileCheck(tileArray[i][j], tColorArray)){//puttableTileCheckの引数に盤面を追加する
+        int minimax = minimax(tColorArray, depth - 1);
+        if(depth % 2 == 0 && minimax > bestScore){//深度が偶数でmaxを求める
+          bestScore = minimax;
+          bestScoreTile = tileArray[i][j];
+        }
+        if(depth % 2 == 1 && minimax < bestScore){//奇数でminを求める
+          bestScore = minimax;
+          bestScoreTile = tileArray[i][j];
+        }
+      }
+    }
+  }
+  return bestScore;
+}
+*/
+
+int scoreCheck(Tile tile){
+  
+  int score = 0;
+  int playerColor;
+  int enemyColor;
+  int boardColor;
+  
+  if(playerTurn){
+    boardColor = 0;
+    playerColor = 1;
+    enemyColor = 2;
+  }else{
+    boardColor = 0;
+    playerColor = 2;
+    enemyColor = 1;
+  }
+  
+  for(int i = 0; i < eightDirectionArray.length; i++){
+    if(tile.tileNumberX + eightDirectionArray[i][0] < 0 ||
+       tile.tileNumberX + eightDirectionArray[i][0] > 7 ||
+       tile.tileNumberY + eightDirectionArray[i][1] < 0 ||
+       tile.tileNumberY + eightDirectionArray[i][1] > 7 ){
+      continue;
+    }else if(tileColorArray[tile.tileNumberX + eightDirectionArray[i][0]]
+                           [tile.tileNumberY + eightDirectionArray[i][1]] == playerColor ||
+             tileColorArray[tile.tileNumberX + eightDirectionArray[i][0]]
+                           [tile.tileNumberY + eightDirectionArray[i][1]] == boardColor){
+      continue;
+    }
+    
+    int moveCount = 1;
+    
+    while(true){
+      if(tile.tileNumberX + eightDirectionArray[i][0] * moveCount < 0 ||
+         tile.tileNumberX + eightDirectionArray[i][0] * moveCount > 7 ||
+         tile.tileNumberY + eightDirectionArray[i][1] * moveCount < 0 ||
+         tile.tileNumberY + eightDirectionArray[i][1] * moveCount > 7){
+        reversibleTilePosX.clear();
+        reversibleTilePosY.clear();
+        break;
+      }
+      
+      if(tileColorArray[tile.tileNumberX + eightDirectionArray[i][0] * moveCount]
+                       [tile.tileNumberY + eightDirectionArray[i][1] * moveCount] == enemyColor){
+        reversibleTilePosX.add(tile.tileNumberX + eightDirectionArray[i][0] * moveCount);
+        reversibleTilePosY.add(tile.tileNumberY + eightDirectionArray[i][1] * moveCount);
+        moveCount++;
+      }else if(tileColorArray[tile.tileNumberX + eightDirectionArray[i][0] * moveCount]
+                             [tile.tileNumberY + eightDirectionArray[i][1] * moveCount] == boardColor){
+        reversibleTilePosX.clear();
+        reversibleTilePosY.clear();
+        break;
+      }else if(tileColorArray[tile.tileNumberX + eightDirectionArray[i][0] * moveCount]
+                             [tile.tileNumberY + eightDirectionArray[i][1] * moveCount] == playerColor){
+        score += tileScore[tile.tileNumberX][tile.tileNumberY];
+        for(int j = 0; j < reversibleTilePosX.size(); j++){
+          score += tileScore[reversibleTilePosX.get(j)][reversibleTilePosY.get(j)];
+        }
+        reversibleTilePosX.clear();
+        reversibleTilePosY.clear();
+        break;
+      }
+    }
+  }
+  return score;
 }
