@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+</head>
+
+<body>
+    <h1>トップ</h1>
+    <p id="text"></p>
+    <p>
+        <a href="browse.html">価格記録の閲覧</a><br>
+        <a href="compare.html">価格の店舗間比較</a><br>
+        <a href="append.html">記録の登録</a><br>
+    </p>
+    <p><a href="login.html">ログアウト</a></p>
+    <script>
+        var currentUrl = new URL(location.href);
+        var queryString = currentUrl.searchParams;
+        var receivedValue = queryString.get("id");
+        document.getElementById("text").innerHTML = receivedValue + "さんがログイン中です";
+    </script>
+</body>
+
+</html>
