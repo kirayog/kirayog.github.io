@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>compare</title>
+</head>
+
+<body>
+    <h1>価格の店舗間比較</h1>
+    <p>比較する食料品名と期間を選択してください</p>
+    <form action="compare.html">
+        <select name="foodname">
+            <option value="1">こんにゃく</option>
+            <option value="2">七味唐辛子</option>
+        </select>
+        <br>
+        <input type="date">
+        <input type="date">
+        <br>
+        <input type="submit" value="決定">
+    </form>
+    <p id="text"></p>
+    <script>
+        var currentUrl = new URL(location.href);
+        var queryString = currentUrl.searchParams;
+        var receivedValue = queryString.get("foodname");
+        var str = "";
+        if (receivedValue != null) {
+            if (receivedValue == 1) {
+                str += "こんにゃく(1ヶあたり)の価格<br>";
+                str += "平均価格：99円<br>";
+                str += "最低価格：99円<br>";
+                str += "<br>"
+                str += "【価格比較】"
+                str += "<table border='1'>";
+                str += "<tr><th>購入日</th><th>店舗</th><th>食料品名</th><th>数量</th><th>税抜き価格</th></tr>";
+                str += "<tr><td>2022/05/18</td><td>○○コンビニ××店</td><td>こんにゃく</td><td>2ヶ</td><td>198円</td></tr>";
+                str += "</table>";
+            } else {
+                str += "七味唐辛子(1ヶあたり)の価格<br>";
+                str += "平均価格：248.3円<br>";
+                str += "最低価格：199円<br>";
+                str += "<br>"
+                str += "【価格比較】"
+                str += "<table border='1'>";
+                str += "<tr><th>購入日</th><th>店舗</th><th>食料品名</th><th>数量</th><th>税抜き価格</th></tr>";
+                str += "<tr><td>2022/05/20</td><td>iiスーパーjj店</td><td>七味唐辛子</td><td>2ヶ</td><td>398円</td></tr>";
+                str += "<tr><td>2022/05/16</td><td>xxスーパーyy店</td><td>七味唐辛子</td><td>1ヶ</td><td>248円</td></tr>";
+                str += "<tr><td>2022/05/19</td><td>△△スーパー□□店</td><td>七味唐辛子</td><td>1ヶ</td><td>298円</td></tr>";
+                str += "</table>";
+            }
+            document.getElementById("text").innerHTML = str;
+        }
+    </script>
+    <p><a href="index.html">トップ</a></p>
+</body>
+
+</html>
