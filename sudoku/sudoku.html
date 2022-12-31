@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>数独自動解答アプリ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <h1>数独自動解答アプリ</h1>
+    <hr>
+    <form action="" id="form" method="get">
+        <table>
+            <tr>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="top right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+            <tr>
+                <td class="bottom left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom left"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+                <td class="bottom right"><input type="text" name="number" maxlength="1" autocomplete="off"></td>
+            </tr>
+        </table>
+        <br>
+        <input class="button" type="submit" value="計算" id="input"><br>
+        <input class="button" id="upload-file" type="file">
+    </form>
+    <p id="output"></p>
+    <script src="js/sudoku.js"></script>
+    <script src="js/example.js"></script>
+    <script src="js/csv.js"></script>
+</body>
+
+</html>
