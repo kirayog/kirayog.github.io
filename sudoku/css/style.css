@@ -1,0 +1,46 @@
+body {
+    text-align: center
+}
+
+table {
+    border-collapse: collapse;
+    margin:auto
+}
+
+td input {
+    width: 35px;
+    height: 35px;
+    border-radius: 0px;
+    border: none;
+    outline: none;
+}
+
+td {
+    width: 20px;
+    border: 1px solid #222222;
+}
+
+.top{
+    border-top: 3px solid #222222;
+}
+
+.bottom{
+    border-bottom: 3px solid #222222;
+}
+
+.left{
+    border-left: 3px solid #222222;
+}
+
+.right{
+    border-right: 3px solid #222222;
+}
+
+td input{
+    width: 35px;
+    height: 35px;
+    font-size: 30px;
+    text-align: center;
+    color: #222222;
+}
+
